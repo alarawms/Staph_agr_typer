@@ -24,13 +24,17 @@ RUN conda install -y \
 # Copy package code
 COPY . /app
 
+# Restructure for package installation (Fixing flat structure)
+# We move the source files into a package subdirectory so setuptools can find them
+RUN mkdir -p staph_agr_typer_pkg/staph_agr_typer && \
+    mv cli.py typer.py utils.py __init__.py convert_refs.py db staph_agr_typer_pkg/staph_agr_typer/ && \
+    mv setup.py staph_agr_typer_pkg/ && \
+    mv README.md staph_agr_typer_pkg/
+
+WORKDIR /app/staph_agr_typer_pkg
+
 # Install the package
 RUN pip install .
-
-# Build databases (assuming references are included in the image)
-# We need to run the conversion and indexing during build or entrypoint?
-# Better to do it during build if possible, but we need the references.
-# The references are in staph_agr_typer/db/references (copied in COPY .)
 
 # Convert references
 RUN python3 staph_agr_typer/convert_refs.py
