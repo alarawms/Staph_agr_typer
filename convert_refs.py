@@ -57,10 +57,14 @@ def convert_gbk_to_fasta(db_dir):
 
 if __name__ == "__main__":
     # Adjust path if running from root or package dir
-    db_path = "staph_agr_typer/db"
+    # If running as script, db is likely a sibling or in staph_agr_typer/db
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    
+    # Check sibling
+    db_path = os.path.join(script_dir, "db")
     if not os.path.exists(db_path):
-        # Try relative to script
-        script_dir = os.path.dirname(os.path.abspath(__file__))
-        db_path = os.path.join(script_dir, "..", "db")
+        # Check if running from root (e.g. python staph_agr_typer/convert_refs.py)
+        # and db is in staph_agr_typer/db
+        pass 
         
     convert_gbk_to_fasta(db_path)

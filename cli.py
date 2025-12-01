@@ -18,8 +18,8 @@ def main():
 def run(fasta, fastq_1, fastq_2, db_dir, output):
     """Run the typer on assembly or reads."""
     if not db_dir:
-        # Default to package db
-        db_dir = Path(__file__).parent.parent / "db"
+        # Default to package db (sibling of this file)
+        db_dir = Path(__file__).parent / "db"
     
     output_path = Path(output)
     output_path.mkdir(parents=True, exist_ok=True)
@@ -50,7 +50,7 @@ def run(fasta, fastq_1, fastq_2, db_dir, output):
 def build_db(db_dir):
     """Build BLAST and KMA databases."""
     if not db_dir:
-        db_dir = Path(__file__).parent.parent / "db"
+        db_dir = Path(__file__).parent / "db"
     
     fasta_path = Path(db_dir) / "agr_references.fasta"
     if not fasta_path.exists():
