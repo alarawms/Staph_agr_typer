@@ -1,6 +1,6 @@
 # Staph Agr Typer
 
-A robust, open-source tool for *Staphylococcus aureus* *agr* locus typing and variant assessment. 
+A robust, modular open-source tool for *Staphylococcus aureus* *agr* locus typing and variant assessment. 
 This tool supports typing from both **genome assemblies** (FASTA) and **raw sequencing reads** (FASTQ), removing the need for proprietary dependencies like USEARCH.
 
 ## Features
