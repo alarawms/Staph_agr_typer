@@ -33,14 +33,15 @@ RUN mkdir -p staph_agr_typer_pkg/staph_agr_typer && \
 
 WORKDIR /app/staph_agr_typer_pkg
 
-# Install the package
-RUN pip install .
-
-# Convert references
+# Generate DB files in source BEFORE install
 RUN python3 staph_agr_typer/convert_refs.py
 
-# Build DBs
-RUN staph_agr_typer build-db
+# Build indices manually in source so they get packaged
+RUN makeblastdb -in staph_agr_typer/db/agr_references.fasta -dbtype nucl -out staph_agr_typer/db/agr_blastdb
+RUN kma index -i staph_agr_typer/db/agr_references.fasta -o staph_agr_typer/db/agr_kma
+
+# Install the package (will include generated DB files)
+RUN pip install .
 
 ENTRYPOINT ["staph_agr_typer"]
 CMD ["--help"]
