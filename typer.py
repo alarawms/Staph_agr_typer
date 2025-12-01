@@ -38,11 +38,11 @@ class AgrTyper:
         agr_group = best_hit["sseqid"] # e.g., "gp1"
         
         return {
-            "agr_group": agr_group,
-            "confidence": best_hit["pident"],
-            "contig": best_hit["qseqid"],
-            "start": best_hit["qstart"],
-            "end": best_hit["qend"]
+            "agr_group": str(agr_group),
+            "confidence": float(best_hit["pident"]),
+            "contig": str(best_hit["qseqid"]),
+            "start": int(best_hit["qstart"]),
+            "end": int(best_hit["qend"])
         }
 
     def type_reads(self, r1, r2, output_dir):
@@ -77,7 +77,7 @@ class AgrTyper:
             
         best_hit = df.sort_values("Score", ascending=False).iloc[0]
         return {
-            "agr_group": best_hit["#Template"].strip(),
-            "confidence": best_hit["Template_Identity"],
-            "depth": best_hit["Depth"]
+            "agr_group": str(best_hit["#Template"].strip()),
+            "confidence": float(best_hit["Template_Identity"]),
+            "depth": float(best_hit["Depth"])
         }
